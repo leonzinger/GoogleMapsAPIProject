@@ -1,5 +1,17 @@
 import React, { Component } from 'react'
 
+class ListItem extends Component {
+
+    onClick = () => {
+        this.props.onClick(this.props.venue);
+    }
+
+    render() {
+        const { venue } = this.props;
+        return <li onClick={this.onClick} className='list-item' key={venue.id}>{venue.name}</li>
+    }
+}
+
 class SearchFilter extends Component {
 
     state = {
@@ -22,7 +34,7 @@ class SearchFilter extends Component {
         const { filterBy } = this.state;
         const list = this.filterVenues(venues, filterBy).map(venue => {
             return (
-                <li className='list-item' key={venue.id}>{venue.name}</li>
+                <ListItem venue={venue} onClick={this.props.onClick} />
             )
         })
 

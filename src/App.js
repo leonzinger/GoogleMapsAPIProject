@@ -15,6 +15,7 @@ class App extends Component {
         lat: 31.6687118,
         lng: 34.5738893,
       },
+      selected: null
     }
   }
 
@@ -32,17 +33,22 @@ class App extends Component {
     })
   }
 
+  setSelectedVenue = (selectedVenue) => {
+    this.setState({ selectedVenue });
+  }
+
   saveFilteredVenues = (filteredVenues) => {
     this.setState({ filteredVenues });
   }
 
   render() {
-    const { venues, center, filteredVenues } = this.state
+    const { venues, center, filteredVenues, selectedVenue } = this.state
     return (
       <div className="App">
         <div className='search-filter-container'>
           {!!venues.length &&
             <SearchFilter
+              onClick={this.setSelectedVenue}
               onChange={this.saveFilteredVenues}
               venues={venues}
             />
@@ -56,6 +62,7 @@ class App extends Component {
               mapElement={<div style={{ height: `100%` }} />}
               center={center}
               markers={filteredVenues}
+              selectedMarker={selectedVenue}
               />
           </div>
       </div>
