@@ -1,0 +1,3 @@
+export const Client_ID = 'client_id=MVLZGLPIAITJITM0OOFYER3C2ZRT5ERGGEWCC0T1YWV3HFZA';
+export const Client_Secret = 'client_secret=1TBLTY0TSM1T320FEO3BJBGTMYVQPCMBOGO5GEBC0ZB1E5LK';
+export const Version = 'v=20180710';
