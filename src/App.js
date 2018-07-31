@@ -13,7 +13,8 @@ class App extends Component {
       center: {
         lat: 31.6687118,
         lng: 34.5738893,
-      }
+      },
+      filterBy: ''
     }
   }
 
@@ -24,24 +25,31 @@ class App extends Component {
     fetch(url)
     .then(res => res.json())
     .then(data => {
-      this.setState({venues: data.response.venues})            
+      this.setState({venues: data.response.venues})
     })
     .catch(err => {
       console.log('We are unable to fetch the data you are looking for', err);
     })
   }
 
-  render() {
-    const { venues, center } = this.state
+  filter = (e) => {
+    this.setState({ filterBy: e.target.value });
+  }
 
+  filterVenues = (venues, filterBy) => venues.filter((venue) => venue.name.includes(filterBy))
+
+  render() {
+    const { venues, center, filterBy } = this.state
+    const filteredVenues = this.filterVenues(venues, filterBy);
     return (
       <div className="App">
         <div className='search-filter-container'>
-          {this.state.venues.length > 0 &&
+          {!!venues.length &&
             <SearchFilter
-                venues={venues} 
-                /> 
+                venues={filteredVenues}
+                />
           }
+          <input type="text" onChange={this.filter} value={filterBy} />
         </div>
           <div className='map-container' role='application'>        
             <Map
@@ -50,7 +58,7 @@ class App extends Component {
               containerElement={<div style={{ height: `100vh` }} />}
               mapElement={<div style={{ height: `100%` }} />}
               center={center}
-              markers={venues}
+              markers={filteredVenues}
               />
           </div>
       </div>

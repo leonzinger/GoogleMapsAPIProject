@@ -1,15 +1,9 @@
 import React, { Component } from 'react'
 
 class SearchFilter extends Component {
-        state = { 
-            venues: [],
-            markers: []
-        }
-    
-    componentDidMount() {
-        this.setState({venues: this.props.venues})
-    }
 
+    
+    
     render() {
         const { venues } = this.props
 
