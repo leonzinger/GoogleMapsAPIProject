@@ -1,14 +1,14 @@
 import React, { Component } from 'react'
 import { withScriptjs, withGoogleMap, GoogleMap} from "react-google-maps"
-import MarkerInfo from './markerwithinfowindow'
+import MarkerInfo from './markerinfo'
 
 class Map extends Component {
     render() {
-        const { center, markers, selectedMarker } = this.props
+        const { center, markers, selectedMarker,openWindow,closeWindow,isopen } = this.props
 
         return (
             <GoogleMap
-                defaultZoom={14}
+                defaultZoom={15}
                 defaultCenter={center}
                 options={{streetViewControl: false, mapTypeControl: false}}>
                 {markers.map((venue, i) => (
@@ -18,7 +18,10 @@ class Map extends Component {
                         position={venue.location}
                         title={venue.name}
                         animation={selectedMarker && venue.id === selectedMarker.id ? 1 : 2}
-                >
+                        openwindow={openWindow}
+                        closewindow={closeWindow}
+                        isOpen={selectedMarker && venue.id === selectedMarker.id}
+                        >
                     </MarkerInfo>
                     ))
                 }

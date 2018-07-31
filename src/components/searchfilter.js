@@ -1,16 +1,5 @@
 import React, { Component } from 'react'
-
-class ListItem extends Component {
-
-    onClick = () => {
-        this.props.onClick(this.props.venue);
-    }
-
-    render() {
-        const { venue } = this.props;
-        return <li onClick={this.onClick} className='list-item' key={venue.id}>{venue.name}</li>
-    }
-}
+import ListItem from './listItem'
 
 class SearchFilter extends Component {
 
@@ -27,23 +16,36 @@ class SearchFilter extends Component {
         this.props.onChange(this.filterVenues(this.props.venues, e.target.value));
     }
     
-    filterVenues = (venues, filterBy) => venues.filter((venue) => venue.name.toLowerCase().includes(filterBy.toLowerCase()))
+    filterVenues = (venues, filterBy) => venues.filter(venue => venue.name.toLowerCase().includes(filterBy.toLowerCase()))
     
     render() {
         const { venues } = this.props;
         const { filterBy } = this.state;
         const list = this.filterVenues(venues, filterBy).map(venue => {
             return (
-                <ListItem venue={venue} onClick={this.props.onClick} />
+                <ListItem venue={venue}
+                          key={venue.id} 
+                          onClick={this.props.onClick}
+                          onKeyPress={this.props.onClick}
+                          />
             )
         })
 
         return  (
             <div className='search-filter'>
-                <ol>
+                <input className='search-input'
+                       autoFocus={true} 
+                       placeholder='Search...' 
+                       type="text" 
+                       onChange={this.filter} 
+                       value={filterBy} 
+                       aria-labelledby='search filter'
+                       role='search'
+                       />
+                
+                <ol className ='search-list-items'>
                     {list}
                 </ol>
-                <input type="text" onChange={this.filter} value={filterBy} />
             </div>
         )
     }
