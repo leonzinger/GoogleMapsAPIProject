@@ -9,12 +9,12 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      filteredVenues: [],
       venues: [],
       center: {
         lat: 31.6687118,
         lng: 34.5738893,
       },
-      filterBy: ''
     }
   }
 
@@ -32,24 +32,21 @@ class App extends Component {
     })
   }
 
-  filter = (e) => {
-    this.setState({ filterBy: e.target.value });
+  saveFilteredVenues = (filteredVenues) => {
+    this.setState({ filteredVenues });
   }
 
-  filterVenues = (venues, filterBy) => venues.filter((venue) => venue.name.includes(filterBy))
-
   render() {
-    const { venues, center, filterBy } = this.state
-    const filteredVenues = this.filterVenues(venues, filterBy);
+    const { venues, center, filteredVenues } = this.state
     return (
       <div className="App">
         <div className='search-filter-container'>
           {!!venues.length &&
             <SearchFilter
-                venues={filteredVenues}
-                />
+              onChange={this.saveFilteredVenues}
+              venues={venues}
+            />
           }
-          <input type="text" onChange={this.filter} value={filterBy} />
         </div>
           <div className='map-container' role='application'>        
             <Map
