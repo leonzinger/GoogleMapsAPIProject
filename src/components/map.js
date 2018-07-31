@@ -4,7 +4,7 @@ import MarkerInfo from './markerwithinfowindow'
 
 class Map extends Component {
     render() {
-        const { center, markers } = this.props
+        const { center, markers, selectedMarker } = this.props
 
         return (
             <GoogleMap
@@ -17,6 +17,7 @@ class Map extends Component {
                         id={venue.id}
                         position={venue.location}
                         title={venue.name}
+                        animation={selectedMarker && venue.id === selectedMarker.id ? 1 : 2}
                 >
                     </MarkerInfo>
                     ))

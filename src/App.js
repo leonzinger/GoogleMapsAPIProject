@@ -9,11 +9,13 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      filteredVenues: [],
       venues: [],
       center: {
         lat: 31.6687118,
         lng: 34.5738893,
-      }
+      },
+      selected: null
     }
   }
 
@@ -24,23 +26,32 @@ class App extends Component {
     fetch(url)
     .then(res => res.json())
     .then(data => {
-      this.setState({venues: data.response.venues})            
+      this.setState({venues: data.response.venues})
     })
     .catch(err => {
       console.log('We are unable to fetch the data you are looking for', err);
     })
   }
 
-  render() {
-    const { venues, center } = this.state
+  setSelectedVenue = (selectedVenue) => {
+    this.setState({ selectedVenue });
+  }
 
+  saveFilteredVenues = (filteredVenues) => {
+    this.setState({ filteredVenues });
+  }
+
+  render() {
+    const { venues, center, filteredVenues, selectedVenue } = this.state
     return (
       <div className="App">
         <div className='search-filter-container'>
-          {this.state.venues.length > 0 &&
+          {!!venues.length &&
             <SearchFilter
-                venues={venues} 
-                /> 
+              onClick={this.setSelectedVenue}
+              onChange={this.saveFilteredVenues}
+              venues={venues}
+            />
           }
         </div>
           <div className='map-container' role='application'>        
@@ -50,7 +61,8 @@ class App extends Component {
               containerElement={<div style={{ height: `100vh` }} />}
               mapElement={<div style={{ height: `100%` }} />}
               center={center}
-              markers={venues}
+              markers={filteredVenues}
+              selectedMarker={selectedVenue}
               />
           </div>
       </div>
