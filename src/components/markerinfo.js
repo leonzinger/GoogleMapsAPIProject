@@ -6,7 +6,6 @@ class MarkerInfo extends Component {
    
     render() {
         const {i, id, position, title, animation, isOpen, openwindow, closewindow} = this.props
-        console.log(isOpen);
         
         return (
             
@@ -16,12 +15,11 @@ class MarkerInfo extends Component {
                 position={position}
                 title={title}
                 animation={animation}
-                onClick={() => openwindow()}>
+                onClick={openwindow}>
 		        {isOpen &&
                     <InfoWindow onCloseClick={closewindow}>
                         <div>{title}
-                            <div className='attribution'>This pin was generated using the FourSquare API
-                            </div>
+                            <div className='attribution'>This pin was generated using the FourSquare API</div>
                         </div>
                     </InfoWindow>
 	 	        }

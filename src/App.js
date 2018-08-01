@@ -11,11 +11,11 @@ class App extends Component {
     this.state = {
       filteredVenues: [],
       venues: [],
-      isOpen: false,
       center: {
         lat: 31.6687118,
         lng: 34.5738893,
-      }
+      },
+      selectedVenue: null
     }
   }
 
@@ -41,21 +41,12 @@ class App extends Component {
     this.setState({ filteredVenues });
   }
 
-  handleToggleOpen = () => {
-    this.setState({
-        isOpen: true
-    });
+  clearSelectedVenue = () => {
+    this.setState({ selectedVenue: null });
   }
-
-  handleToggleClose = () => {
-    this.setState({
-        isOpen: false
-    });
-  }
-
 
   render() {
-    const { venues, center, filteredVenues, selectedVenue, isOpen} = this.state
+    const { venues, center, filteredVenues, selectedVenue} = this.state
     return (
       <div className="App">
         <div className='search-filter-container'>
@@ -76,9 +67,8 @@ class App extends Component {
               center={center}
               markers={filteredVenues}
               selectedMarker={selectedVenue}
-              openWindow={this.handleToggleOpen}
-              closeWindow={this.handleToggleClose}
-              isopen={isOpen}
+              openWindow={this.setSelectedVenue}
+              closeWindow={this.clearSelectedVenue}
               />
           </div>
       </div>
